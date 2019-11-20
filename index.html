@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        .row{
+          text-align: center;
+        }
+        #btn{
+            text-align: center;
+            position: relative;
+            border-radius: 3px;
+            border: 2px solid;
+            display: inline-block;
+            font-size: 18px;
+            font-family: FuturaDemi,Helvetica,Arial,sans-serif;
+            letter-spacing: .7px;
+            text-align: center;
+            text-transform: uppercase;
+            padding: 0 16px;
+            transition: all .1s ease-out;
+            cursor: pointer;
+            padding: 10px;
+            text-decoration: none;
+            background-color: #e90c0c;
+            color: white;
+            border-color: #9c0000;
+        }
+        #container{
+            margin-top: 15px;
+        }
+        body{
+            background-image: url('https://hookagency.com/wp-content/uploads/2015/11/murdered-out-dark-black-gradient.jpg');
+            background-size: cover;
+        }
+    </style>
+</head>
+<body style="">
+    <div class="row">
+        <a href="#" id="btn">Random</a>
+        <div id="container">
+        </div>
+    </div>
+    <script>
+        var random = function () {
+            console.log('random');
+            var boundary = String(Math.random()).slice(2);
+            var boundaryMiddle = '--' + boundary + '\r\n';
+            var boundaryLast = '--' + boundary + '--\r\n'
+            var body = ['\r\n'];
+            body = body.join(boundaryMiddle) + boundaryLast;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/gudstufff.php', true);
+
+            xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+
+            xhr.onreadystatechange = function() {
+                if (this.readyState != 4) return;
+
+                var obj = JSON.parse(this.responseText);
+                console.log( obj );
+
+                $('#container').html("<img src=\""+obj.item+"\">")
+            };
+
+            xhr.send(body);
+        }
+
+        random();
+
+        $("#btn").click(function () {
+            random();
+        });
+    </script>
+</body>
+</html>
